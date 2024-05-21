@@ -13,6 +13,28 @@ module.exports.getEtabById = async (req, res)=>{
     res.status(200).json(etab);
 };
 
+module.exports.getEtabByVille = async (req, res)=>{
+    
+    const selectedVille = req.body.ville;
+    const etab = await EtabModel.find({location: selectedVille });
+    res.status(200).json(etab);
+};
+
+module.exports.getEtabByType = async (req, res)=>{
+    
+    const selectedType = req.body.type;
+    const etab = await EtabModel.find({etablissement_type: selectedType });
+    res.status(200).json(etab);
+};
+
+module.exports.getEtabByTypeAndVille = async (req, res)=>{
+    
+    const selectedType = req.body.type;
+    const selectedVille = req.body.ville;
+    const etab = await EtabModel.find({etablissement_type: selectedType,location: selectedVille });
+    res.status(200).json(etab);
+};
+
 
 module.exports.editEtab = async (req, res)=>{
 
@@ -31,6 +53,22 @@ module.exports.editEtab = async (req, res)=>{
 module.exports.deleteEtab = async (req, res)=>{
 
     const etab = await EtabModel.remove(selectedId)
+};
+
+module.exports.deleteEtabByVille = async (req, res)=>{
+
+
+    const selectedVille = req.body.ville;
+    const etab = await EtabModel.remove({ location: selectedVille });
+    res.status(200).json(etab);
+};
+
+module.exports.deleteEtabByType = async (req, res)=>{
+
+    
+    const selectedType = req.body.type;
+    const etab = await EtabModel.remove({etablissement_type: selectedType });
+    res.status(200).json(etab);
 };
 
 module.exports.setEtabs = async (req, res)=>{

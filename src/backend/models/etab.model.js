@@ -31,7 +31,7 @@ const etabSchema = mongoose.Schema({
             required: true,
             validate: {
                 validator: (value) => /\S+@\S+\.\S+/.test(value),
-                message: "email incorrect",
+                message: "Email Faux !",
             },
         },
 
