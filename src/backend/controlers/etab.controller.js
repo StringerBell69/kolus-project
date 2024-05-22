@@ -113,11 +113,13 @@ exports.deleteEtabByType =  (req, res)=>{
 
     
     const etabs = readData();
-    const index = etabs.filter(x => x.id === req.params.etablissement_type);
+    const etab = etabs.filter(x => x.etablissement_type === req.params.etablissement_type);
+
+    const index = etab.filter(x => x.id === req.params.etablissement_type);
     if (index !== -1) {
         etabs.splice(index); 
-        writeData(etabs); 
-        res.status(200).json(etabs[index]);
+        writeData(etab); 
+        res.status(200).json(etab[index]);
     } else {
         res.status(404).json({ message: "Établissement non trouvé" });}; 
     };

@@ -1,5 +1,5 @@
 const express = require("express");
-const { setEtabs,getEtabById , getEtabs,getEtabByType,getEtabByVille ,getEtabByTypeAndVille, deleteEtab ,editEtab } = require('../controlers/etab.controller');
+const { setEtabs,getEtabById , getEtabs,getEtabByType,getEtabByVille ,getEtabByTypeAndVille,deleteEtabByType, deleteEtab ,editEtab } = require('../controlers/etab.controller');
 
 const app = express();
 
