@@ -1,82 +1,135 @@
-const EtabModel = require('../models/etab.model')
+const fs = require('fs');
+const path = require('path');
+const pathToPublic = path.join(__dirname, '..','..');
+const dataPath = path.join(pathToPublic, 'MOCK_DATA.json');
 
 
-module.exports.getEtabs = async (req, res)=>{
+const readData = () => {
+    const data = fs.readFileSync(dataPath, 'utf8');
+    return JSON.parse(data);
+};
+
+const writeData = (data) => {
+    fs.writeFileSync(dataPath, JSON.stringify(data, null, 2), 'utf8');
+};
+
+
+exports.getEtabs =  (req, res)=>{
     
-    const etabs = await EtabModel.find();
+    const etabs =  readData();
     res.status(200).json(etabs);
 };
 
-module.exports.getEtabById = async (req, res)=>{
+exports.getEtabById =  (req, res)=>{
+
     
-    const etab = await EtabModel.findById(selectedId);
-    res.status(200).json(etab);
-};
-
-module.exports.getEtabByVille = async (req, res)=>{
-    
-    const selectedVille = req.body.ville;
-    const etab = await EtabModel.find({location: selectedVille });
-    res.status(200).json(etab);
-};
-
-module.exports.getEtabByType = async (req, res)=>{
-    
-    const selectedType = req.body.type;
-    const etab = await EtabModel.find({etablissement_type: selectedType });
-    res.status(200).json(etab);
-};
-
-module.exports.getEtabByTypeAndVille = async (req, res)=>{
-    
-    const selectedType = req.body.type;
-    const selectedVille = req.body.ville;
-    const etab = await EtabModel.find({etablissement_type: selectedType,location: selectedVille });
-    res.status(200).json(etab);
-};
-
-
-module.exports.editEtab = async (req, res)=>{
-
-    const etab = await EtabModel.findById(selectedId)
-
-    if (!etab){
-        res.status(400).json({message: "Cet établissement n'existe pas"});
+    const etabs =  readData();
+    const etab = etabs.find(x => x.id ===parseInt(req.params.id));
+    if (etab) {
+        res.status(200).json(etab);
+    } else {
+        res.status(404).json({ message: "Établissement non trouvé" });
     }
-
-    const updateEtab = await EtabModel.findById(etab, req.body,
-        {new: true}
-    )
-    res.status(200).json(updateEtab);
 };
 
-module.exports.deleteEtab = async (req, res)=>{
 
-    const etab = await EtabModel.remove(selectedId)
+exports.getEtabByVille =  (req, res)=>{
+
+    const etabs =  readData()
+    const etab = etabs.find(x => x.location === req.params.location);
+    if (etab) {
+        res.status(200).json(etab);
+    } else {
+        res.status(404).json({ message: "Établissement non trouvé" });
+    }
 };
 
-module.exports.deleteEtabByVille = async (req, res)=>{
+exports.getEtabByType =  (req, res)=>{
 
-
-    const selectedVille = req.body.ville;
-    const etab = await EtabModel.remove({ location: selectedVille });
-    res.status(200).json(etab);
+    const etabs =  readData()
+    const etab = etabs.find(x => x.etablissement_type === req.params.etablissement_type);
+    if (etab) {
+        res.status(200).json(etab);
+    } else {
+        res.status(404).json({ message: "Établissement non trouvé" });
+    }
 };
 
-module.exports.deleteEtabByType = async (req, res)=>{
+
+exports.getEtabByTypeAndVille =  (req, res)=>{
+    
+    const etabs =  readData()
+    const etab = etabs.find(x => x.etablissement_type === req.params.etablissement_type && x.location === req.params.location);
+    if (etab) {
+        res.status(200).json(etab);
+    } else {
+        res.status(404).json({ message: "Établissement non trouvé" });
+    }
+};
+
+
+
+
+
+exports.editEtab =  (req, res)=>{
+
+    const etabs = readData();
+    const index = etabs.findIndex(x => x.id === parseInt(req.params.id));
+    if (index !== -1) {
+        etabs[index] = { ...etabs[index], ...req.body };
+        writeData(etabs);
+        res.status(200).json(etabs[index]);
+    } else {
+        res.status(404).json({ message: "Établissement non trouvé" });
+    }
+};
+
+exports.deleteEtab =  (req, res)=>{
+
+    const etabs = readData();
+    const index = etabs.findIndex(x => x.id === parseInt(req.params.id));
+    if (index !== -1) {
+        etabs.splice(index, 1); 
+        writeData(etabs); 
+        res.status(200).json(etabs[index]);
+    } else {
+        res.status(404).json({ message: "Établissement non trouvé" });}; 
+    };
+
+exports.deleteEtabByVille =  (req, res)=>{
+
+    const etabs = readData();
+    const index = etabs.filter(x => x.id === req.params.location);
+    if (index !== -1) {
+        etabs.splice(index); 
+        writeData(etabs); 
+        res.status(200).json(etabs[index]);
+    } else {
+        res.status(404).json({ message: "Établissement non trouvé" });}; 
+    };
+
+
+exports.deleteEtabByType =  (req, res)=>{
 
     
-    const selectedType = req.body.type;
-    const etab = await EtabModel.remove({etablissement_type: selectedType });
-    res.status(200).json(etab);
-};
+    const etabs = readData();
+    const index = etabs.filter(x => x.id === req.params.etablissement_type);
+    if (index !== -1) {
+        etabs.splice(index); 
+        writeData(etabs); 
+        res.status(200).json(etabs[index]);
+    } else {
+        res.status(404).json({ message: "Établissement non trouvé" });}; 
+    };
 
-module.exports.setEtabs = async (req, res)=>{
 
-    const etab = await EtabModel.create(
-    {
+exports.setEtabs =  (req, res)=>{
+
+    const etabs = readDatab();
+    const newEtab = {
+
     id: req.body.id,
-     
+
     etablissement_type: req.body.etablissement_type,
 
     etablissement: req.body.etablissement,
@@ -86,7 +139,9 @@ module.exports.setEtabs = async (req, res)=>{
     address: req.body.address,
 
     mail:    req.body.mail,
-
-    })
-    res.status(200).json(etab);
+       
+    };
+    etabs.push(newEtab);
+    writeData(etabs);
+    res.status(200).json(newEtab);
 };

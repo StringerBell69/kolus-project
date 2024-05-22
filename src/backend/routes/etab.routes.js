@@ -1,40 +1,52 @@
 const express = require("express");
-const { setEtabs, getEtabs,getEtabByType,getEtabByVille , deleteEtab ,editEtab } = require('../controlers/etab.controller');
-const router = express.Router()
+const { setEtabs,getEtabById , getEtabs,getEtabByType,getEtabByVille ,getEtabByTypeAndVille, deleteEtab ,editEtab } = require('../controlers/etab.controller');
 
-router.get("/", getEtabs=>{
-    
+const app = express();
+
+app.get("/", (req, res) => {
+    getEtabs(req, res);  
 });
 
-router.get("/:id", getEtabById=>{
-
+app.get("/:id", (req, res) =>{
+    getEtabById(req, res); 
 });
 
-router.get("/:id", getEtabByVille=>{
-
+app.get("/ville/:location", (req, res) => {
+    getEtabByVille(req, res);
 });
 
-router.get("/:id", getEtabByType=>{
+app.get("/type/:etablissement_type", (req, res) => {
+    getEtabByType(req, res);
+});
 
+app.get("/type/:etablissement_type/ville/:location", (req, res) => {
+    getEtabByTypeAndVille(req, res);
+});
+
+app.put("/:id", (req, res) => {
+    editEtab(req, res);
+});
+
+app.delete("/:id", (req, res) => {
+    deleteEtab(req, res);
+});
+
+app.delete("/ville/:location", (req, res) => {
+    deleteEtabByVille(req, res);
+});
+
+app.delete("/type/:etablissement_type", (req, res) => {
+    deleteEtabByType(req, res);
+});
+
+app.post("/", (req, res) => {
+    setEtabs(req, res);
 });
 
 
-router.put("/:id", editEtab=>{
-    
-});
-
-router.delete("/:id", deleteEtab=>{
-    
-});
-
-router.post("/", setEtabs=>{
-    
-});
 
 
 
 
 
-
-
-module.exports = router;
+module.exports = app;
