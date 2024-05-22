@@ -10,7 +10,7 @@ const readData = () => {
 };
 
 const writeData = (data) => {
-    fs.writeFileSync(dataPath, JSON.stringify(data, null, 2), 'utf8');
+     fs.writeFileSync(dataPath, JSON.stringify(data, null, 2), 'utf8');
 };
 
 
@@ -86,12 +86,12 @@ exports.editEtab =  (req, res)=>{
 
 exports.deleteEtab =  (req, res)=>{
 
-    const etabs = readData();
-    const index = etabs.findIndex(x => x.id === parseInt(req.params.id));
+    const etab = readData();
+    const index = etab.findIndex(x => x.id === parseInt(req.params.id));
     if (index !== -1) {
-        etabs.splice(index, 1); 
-        writeData(etabs); 
-        res.status(200).json(etabs[index]);
+        etab.splice(index, 1); 
+        writeData(etab); 
+        res.status(200).json(etab[index]);
     } else {
         res.status(404).json({ message: "Établissement non trouvé" });}; 
     };
@@ -113,13 +113,11 @@ exports.deleteEtabByType =  (req, res)=>{
 
     
     const etabs = readData();
-    const etab = etabs.filter(x => x.etablissement_type === req.params.etablissement_type);
-
-    const index = etab.filter(x => x.id === req.params.etablissement_type);
+    const index = etabs.filter(x => x.id === req.params.etablissement_type);
     if (index !== -1) {
-        etabs.splice(index); 
-        writeData(etab); 
-        res.status(200).json(etab[index]);
+        etabs.splice(index);
+        writeData(etabs); 
+        res.status(200).json(etabs[index]);
     } else {
         res.status(404).json({ message: "Établissement non trouvé" });}; 
     };
@@ -127,7 +125,8 @@ exports.deleteEtabByType =  (req, res)=>{
 
 exports.setEtabs =  (req, res)=>{
 
-    const etabs = readDatab();
+    try{
+    const etabs = readData();
     const newEtab = {
 
     id: req.body.id,
@@ -143,7 +142,12 @@ exports.setEtabs =  (req, res)=>{
     mail:    req.body.mail,
        
     };
+    
     etabs.push(newEtab);
     writeData(etabs);
     res.status(200).json(newEtab);
+}
+catch {
+    res.status(404).json({ message: "Établissement non ajouté" });
+}
 };
