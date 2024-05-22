@@ -36,7 +36,7 @@ exports.getEtabById =  (req, res)=>{
 exports.getEtabByVille =  (req, res)=>{
 
     const etabs =  readData()
-    const etab = etabs.find(x => x.location === req.params.location);
+    const etab = etabs.filter(x => x.location === req.params.location);
     if (etab) {
         res.status(200).json(etab);
     } else {
@@ -47,7 +47,7 @@ exports.getEtabByVille =  (req, res)=>{
 exports.getEtabByType =  (req, res)=>{
 
     const etabs =  readData()
-    const etab = etabs.find(x => x.etablissement_type === req.params.etablissement_type);
+    const etab = etabs.filter(x => x.etablissement_type === req.params.etablissement_type);
     if (etab) {
         res.status(200).json(etab);
     } else {
@@ -59,7 +59,7 @@ exports.getEtabByType =  (req, res)=>{
 exports.getEtabByTypeAndVille =  (req, res)=>{
     
     const etabs =  readData()
-    const etab = etabs.find(x => x.etablissement_type === req.params.etablissement_type && x.location === req.params.location);
+    const etab = etabs.filter(x => x.etablissement_type === req.params.etablissement_type && x.location === req.params.location);
     if (etab) {
         res.status(200).json(etab);
     } else {
