@@ -85,7 +85,8 @@ La data est stockée dans un fichier `MOCK_DATA.json` qui se situe à la racine 
 ├── KOLUS-PROJECT
 │ ├── backend
 │ ├── KL
-│ ├── MOCK_DATA.json ```
+│ ├── MOCK_DATA.json 
+```
 
 Les données sont de la forme suivante : 
 
