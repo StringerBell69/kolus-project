@@ -16,13 +16,13 @@ d’une ville donnée et d’un secteur d’activité dans une ville donnée.
 Deplus que supprimer tous les établissements d’une ville et d’un secteur d’activité.
 
 Ces routes et ses contrôleurs sont observables dans les fichiers :
-
+```
 ├── backend
 │ ├── controllers
 │ │ └── etab.controller.js
 │ ├── routes
 │ │ └── etab.routes.js
-
+```
 ## Le Projet Frontend
 
 L'objectif ici était d'utiliser la bibliothèque Chakra UI pour créer un atome 'Table' qui permet d’afficher les données traitées par le BackEnd ainsi que lier des Icon Button Trash à l'api permettant de supprimer la ligne sélectionné.
@@ -82,21 +82,22 @@ L'objectif ici était d'utiliser la bibliothèque Chakra UI pour créer un atome
 
 La data est stockée dans un fichier `MOCK_DATA.json` qui se situe à la racine du projet.
 
-├── KOLUS-PROJECT
-│ ├── backend
-│ ├── KL
-│ ├── MOCK_DATA.json
+KOLUS-PROJECT\MOCK_DATA.json
 
 Les données sont de la forme suivante : 
 
-{
+
     "id": 5,
     "etablissement_type": "Music",
     "etablissement": "First Financial Corporation Indiana",
     "location": "Masis",
     "address": "7 Longview Junction",
     "mail": "nwickwar4@tiny.cc"
-}
+
+
+    
+
+
 
 
 ### Comment Utiliser ? 
