@@ -81,8 +81,11 @@ L'objectif ici était d'utiliser la bibliothèque Chakra UI pour créer un atome
 ## Data
 
 La data est stockée dans un fichier `MOCK_DATA.json` qui se situe à la racine du projet.
-
-KOLUS-PROJECT\MOCK_DATA.json
+```
+├── KOLUS-PROJECT
+│ ├── backend
+│ ├── KL
+│ ├── MOCK_DATA.json ```
 
 Les données sont de la forme suivante : 
 
