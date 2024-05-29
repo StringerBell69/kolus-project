@@ -29,8 +29,19 @@ export const DataProvider = ({ children }) => {
     });
   };
 
+  const handleAdd = (formData) => {
+    console.log(`Add item with ID: ${formData.id}`);
+    axios.post(`http://localhost:5000/etab`, formData)
+      .then(() => {
+        console.log('etab ajouté');
+        setData(prevData => [...prevData, formData]);
+      })
+      .catch(err => {
+        console.error('Erreur ajout etab', err);
+      });
+  };
   return (
-    <DataContext.Provider value={{ data, handleDelete }}>
+    <DataContext.Provider value={{ data, handleDelete,handleAdd }}>
       {children}
     </DataContext.Provider>
   );
