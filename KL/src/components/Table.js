@@ -1,5 +1,6 @@
 import React, { useContext, useMemo } from 'react';
 import DataContext from '../contexts/DataContext';
+import { DataProvider } from '../contexts/DataContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -13,6 +14,7 @@ import {
   Box,
   IconButton,
 } from '@chakra-ui/react';
+import ModalEdit from './ModalEdit';
 
 function TableUI() {
   const { data, handleDelete } = useContext(DataContext);
@@ -29,6 +31,7 @@ function TableUI() {
             <Th>Ville</Th>
             <Th>Adresse</Th>
             <Th>Mail</Th>
+            <th>Modifier</th>
             <Th>Supprimer</Th>
           </Tr>
         </Thead>
@@ -42,13 +45,20 @@ function TableUI() {
               <Td>{item.address}</Td>
               <Td>{item.mail}</Td>
               <Td>
+              <DataProvider>
+              <ModalEdit />
+              </DataProvider>          
+              </Td>
+              <Td>
               <IconButton
                   icon={<FontAwesomeIcon icon={faTrash} />}
                   onClick={() => handleDelete(item.id)}
                   variant="solid"
-                  colorScheme='blue'
+                  colorScheme='purple'
                 />
               </Td>
+
+              
             </Tr>
           ))}
         </Tbody>

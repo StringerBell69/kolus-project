@@ -7,6 +7,7 @@ const dataPath = path.join(pathToPublic, 'MOCK_DATA.json');
 const readData = () => {
     const data = fs.readFileSync(dataPath, 'utf8');
     return JSON.parse(data);
+    
 };
 
 const writeData = (data) => {

@@ -16,7 +16,7 @@ export const DataProvider = ({ children }) => {
       .catch(err => {
         console.error('Erreur en fetch', err);
       });
-  }, []);
+  }, [data]);
 
   const handleDelete = (id) => {
     console.log(`Delete item with ID: ${id}`);
@@ -28,6 +28,18 @@ export const DataProvider = ({ children }) => {
       console.error('Erreur effacer handdelete', err);
     });
   };
+
+  const handleEdit = (formData) => {
+    console.log(`edit item with ID: ${formData.id}`);
+    axios.put(`http://localhost:5000/etab/${formData.id}`, formData).then(() => {
+      setData(prevData => prevData.map(item => item.id === formData.id ? formData : item));
+    })
+    .catch(err => {
+      console.error('Error updating item', err);
+    });
+  };
+  
+
 
   const handleAdd = (formData) => {
     console.log(`Add item with ID: ${formData.id}`);
@@ -41,7 +53,7 @@ export const DataProvider = ({ children }) => {
       });
   };
   return (
-    <DataContext.Provider value={{ data, handleDelete,handleAdd }}>
+    <DataContext.Provider value={{ data, handleDelete,handleAdd,handleEdit }}>
       {children}
     </DataContext.Provider>
   );
