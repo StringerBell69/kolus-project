@@ -9,15 +9,18 @@ export const DataProvider = ({ children }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/etab')
+    let url = 'http://localhost:5000/etab';
+
+
+    axios.get(url)
       .then(response => {
         setData(response.data);
       })
       .catch(err => {
         console.error('Erreur en fetch', err);
       });
-  }, [data]);
-
+  }, []);
+  
   const handleDelete = (id) => {
     console.log(`Delete item with ID: ${id}`);
     axios.delete(`http://localhost:5000/etab/${id}`).then(() => {

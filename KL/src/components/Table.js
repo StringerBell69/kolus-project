@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import DataContext from '../contexts/DataContext';
 import { DataProvider } from '../contexts/DataContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,11 +13,18 @@ import {
   TableCaption,
   Box,
   IconButton,
+  Input,
+  InputGroup,
 } from '@chakra-ui/react';
 import ModalEdit from './ModalEdit';
 
 function TableUI() {
   const { data, handleDelete } = useContext(DataContext);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
 
   const tableContent = useMemo(() => (
     <Box p={4}>
@@ -35,6 +42,29 @@ function TableUI() {
             <Th>Supprimer</Th>
           </Tr>
         </Thead>
+        <Tbody>
+          <td></td>
+          <td><InputGroup size='md'>
+                <Input
+                  placeholder='Search...'
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                />
+              </InputGroup></td>
+          <td></td>
+          <td><InputGroup size='md'>
+                <Input
+                  placeholder='Search...'
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                />
+              </InputGroup></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+
+        </Tbody>
         <Tbody>
           {data.map(item => (
             <Tr key={item.id}>
